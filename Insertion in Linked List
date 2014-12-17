@@ -1,0 +1,57 @@
+#include <stdio.h>
+
+struct node{
+    int val;
+    struct node* next;
+};
+void list_print(struct node* nx){
+    nx=nx->next;//because we are using dummy head,no need to print first one
+
+    while(nx!=NULL){
+        printf("%d ",nx->val);
+        nx=nx->next;
+    }
+    printf(" End\n");
+}
+void tailInsert(struct node* nx,int x){
+    struct node* tnode= new node;
+    tnode->val=x;
+    tnode->next=NULL;
+
+    while(nx->next!=NULL) nx=nx->next;
+    nx->next=tnode;
+
+}
+void sortedInsert(struct node* nx,int x){
+    struct node* tnode= new node;
+    tnode->val=x;
+
+    while(nx->next!=NULL&&nx->next->val<x) nx=nx->next;
+    tnode->next=nx->next;
+    nx->next=tnode;
+
+}
+int main(){
+    struct node *head= new node;//dummy head
+    head->next=NULL;
+    int choice,x;
+    while(1){
+        printf("Enter Choice\n");
+        printf("1.TailInsert 2.SortedInsert 3.Print\n");
+        scanf("%d",&choice);
+        if(choice==1){
+            printf("Input Value to tail Insert: ");
+            scanf("%d",&x);
+            tailInsert(head,x);
+        }
+        else if(choice==2){
+            printf("Input Value to sorted Insert: ");
+            scanf("%d",&x);
+            sortedInsert(head,x);
+        }
+        else if(choice==3){
+            list_print(head);
+        }
+    }
+
+}
